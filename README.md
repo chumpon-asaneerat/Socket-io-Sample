@@ -1,2 +1,2 @@
-# socket.io Sample
+# socket.io sample
 The express.js socket.io sample.
