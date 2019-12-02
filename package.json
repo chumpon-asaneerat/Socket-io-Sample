@@ -1,7 +1,7 @@
 {
     "name": "socketio-sample",
     "version": "1.0.0",
-    "description": "The github express socket io sample",
+    "description": "The express.js socket io sample",
     "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
