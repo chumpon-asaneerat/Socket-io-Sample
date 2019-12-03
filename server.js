@@ -52,7 +52,7 @@ const dist_libs = [
     /* riotjs */
     { "route": "/dist/js", "path": "riotjs-3.13.2" },
     /* socket.io */
-    { "route": "/dist/js", "path": "socket.io-2.2.0" },
+    { "route": "/dist", "path": "socket.io-2.2.0" },
     /* for access precompile riotjs component */
     { "route": "/components", "path": "../../dist/component/riot" }
 ];
@@ -70,9 +70,12 @@ dist_libs.forEach(element => {
 //#endregion
 
 app.get("/", (req, res) => {
+    /*
     res.json({
         data: "it's work!!"
     })
+    */
+   res.sendFile(path.join(__dirname, 'index.html'))
 });
 
 const server = app.listen(PORT, () => {
