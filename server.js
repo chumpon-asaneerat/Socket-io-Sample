@@ -17,6 +17,9 @@ const PORT = 3000;
 
 const app = express();
 
+const http = require('http').Server(app);
+const io = require('socket.io')(http, { transports: ['websocket'] });
+
 //#region use middlewares
 
 app.use(helmet());
@@ -78,6 +81,25 @@ app.get("/", (req, res) => {
    res.sendFile(path.join(__dirname, 'index.html'))
 });
 
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+})
+
+// WARNING: app.listen(PORT) will NOT work here!
+/*
 const server = app.listen(PORT, () => {
     console.log(`${APPNAME} listen on port: ${PORT}`);
-});
+})
+*/
+
+http.listen(PORT, () => {
+    console.log(`${APPNAME} listen on port: ${PORT}`);
+})
