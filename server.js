@@ -13,7 +13,14 @@ const favicon = require("serve-favicon");
 //#endregion
 
 const APPNAME = "socket.io sample";
-const PORT = 3000;
+
+// The command to execute is
+//
+// PS> node server.js 3001
+// PS> node server.js 3002
+//
+//console.log('args:', process.argv)
+const PORT = process.argv[2] || 3000;
 
 const app = express();
 
@@ -73,23 +80,23 @@ dist_libs.forEach(element => {
 //#endregion
 
 app.get("/", (req, res) => {
-    /*
-    res.json({
-        data: "it's work!!"
-    })
-    */
-   res.sendFile(path.join(__dirname, 'index.html'))
+    let fileName = 'index'
+    if (PORT !== '3000') {
+        fileName = fileName + PORT
+    }
+    fileName = fileName + '.html'
+    res.sendFile(path.join(__dirname, fileName))
 });
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log('a user connected: ' + io.engine.clientsCount);
 
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
+    socket.on('chat message', (data) => {
+        io.emit('chat message', data);
     });
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log('user disconnected: ' + io.engine.clientsCount);
     });
 })
 
@@ -99,6 +106,8 @@ const server = app.listen(PORT, () => {
     console.log(`${APPNAME} listen on port: ${PORT}`);
 })
 */
+
+console.log('PORT NO:', PORT)
 
 http.listen(PORT, () => {
     console.log(`${APPNAME} listen on port: ${PORT}`);
