@@ -81,7 +81,7 @@ dist_libs.forEach(element => {
 
 app.get("/", (req, res) => {
     let fileName = 'index'
-    if (PORT !== '3000') {
+    if (PORT !== 3000) {
         fileName = fileName + PORT
     }
     fileName = fileName + '.html'
