@@ -14,13 +14,19 @@ const favicon = require("serve-favicon");
 
 const APPNAME = "socket.io sample";
 
-// The command to execute is
-//
-// PS> node server.js 3001
-// PS> node server.js 3002
-//
-//console.log('args:', process.argv)
-const PORT = process.argv[2] || 3000;
+let getargs = () => {
+    let obj = {}
+    process.argv.forEach(arg => {
+        let pairs = arg.split('=')
+        if (pairs.length === 2) {
+            obj[pairs[0].toLowerCase()] = pairs[1]
+        }
+    })
+    return obj;
+}
+
+let args = getargs();
+const PORT = args.port || 3000;
 
 const app = express();
 
